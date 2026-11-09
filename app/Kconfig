@@ -183,6 +183,16 @@ config ZMK_BLE_PASSKEY_ENTRY
     bool "Require passkey entry on the keyboard to complete pairing"
     select RING_BUFFER
 
+config ZMK_BLE_SUSPEND_ADV_ON_HOST_POWER_OFF
+    bool "Stop advertising after the host powers off until a key is pressed"
+    default y
+    help
+      When the host of the active profile disconnects with reason 0x15 (Remote Device
+      Terminated Connection due to Power Off), do not advertise again until a key is
+      pressed or the active profile changes. Linux sends this reason when it suspends and
+      then wakes up on any advertisement from the keyboard, so advertising right away
+      would wake the host immediately.
+
 config BT_SMP_ALLOW_UNAUTH_OVERWRITE
     imply ZMK_BLE_PASSKEY_ENTRY
 
